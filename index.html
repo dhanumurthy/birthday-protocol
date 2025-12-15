@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURE TERMINAL // LOGIN REQUIRED</title>
+    <title>SECURE TERMINAL // JASMAN_OS</title>
     <style>
         body {
             background-color: #0d0d0d;
@@ -11,10 +11,10 @@
             font-family: 'Courier New', Courier, monospace;
             padding: 20px;
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center; /* Center everything initially */
+            align-items: center;
             flex-direction: column;
         }
 
@@ -23,8 +23,9 @@
             text-align: center;
             border: 1px solid #00ff41;
             padding: 40px;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            background-color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            background-color: #050505;
+            max-width: 90%;
         }
         
         input[type="text"] {
@@ -38,99 +39,165 @@
             padding: 10px;
             text-align: center;
             margin-top: 15px;
-            width: 200px;
+            width: 80%;
+            max-width: 250px;
         }
 
         button {
             background-color: #00ff41;
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             margin-top: 20px;
             transition: all 0.3s;
         }
-        button:hover { background-color: #fff; }
+        button:hover { background-color: #fff; box-shadow: 0 0 10px #fff; }
 
-        .error-msg { color: red; margin-top: 10px; opacity: 0; transition: opacity 0.3s; }
+        .error-msg { color: #ff3333; margin-top: 15px; opacity: 0; transition: opacity 0.3s; }
 
         /* MAIN CONTENT (Hidden by default) */
         #main-content {
-            display: none; /* KEY: Hides the gift until password is correct */
-            max-width: 600px;
+            display: none; 
+            max-width: 650px;
             width: 100%;
+            padding-bottom: 50px; /* Space for scrolling */
         }
 
-        /* REUSING STYLES FROM BEFORE */
-        h1 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; }
-        .terminal-box { border: 1px solid #333; padding: 15px; margin-bottom: 15px; background-color: #111; }
-        .command-line { cursor: pointer; padding: 10px; border: 1px dashed #00ff41; margin-top: 10px; transition: all 0.3s; }
-        .command-line:hover { background-color: #003300; }
-        .hidden-content { display: none; padding: 15px; color: #ccc; border-left: 2px solid #00ff41; margin-top: 5px; line-height: 1.6; }
+        /* GENERAL STYLES */
+        h1 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; font-size: 1.5rem; }
+        
+        .terminal-box { 
+            border: 1px solid #333; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            background-color: #0f0f0f; 
+        }
+
+        .command-line { 
+            cursor: pointer; 
+            padding: 12px; 
+            border: 1px dashed #00ff41; 
+            margin-top: 10px; 
+            transition: all 0.3s; 
+            font-weight: bold;
+        }
+        .command-line:hover { background-color: #003300; border-style: solid; }
+
+        .hidden-content { 
+            display: none; 
+            padding: 15px; 
+            color: #ddd; 
+            border-left: 3px solid #00ff41; 
+            margin-top: 5px; 
+            line-height: 1.6; 
+            background-color: #1a1a1a;
+        }
+
         .show { display: block; }
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
 
+        /* ANIME GIF STYLE */
+        .anime-gif {
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid #00ff41;
+            opacity: 0.9;
+            margin: 10px 0;
+        }
+
+        a { color: #00ff41; }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <h2>> AUTHENTICATION REQUIRED</h2>
-        <p>Enter Passkey to Decrypt Birthday Protocol:</p>
+        <h2>> SECURE_GATEWAY</h2>
+        <p>Target Identified: <strong>JASMAN KAPOOR</strong></p>
+        <p>Enter Admin Passkey to Decrypt:</p>
         <input type="text" id="passwordInput" placeholder="ENTER_CODE" autocomplete="off">
         <br>
-        <button onclick="checkPassword()">UNLOCK</button>
-        <p id="error-message" class="error-msg">ACCESS DENIED // TRY AGAIN</p>
+        <button onclick="checkPassword()">INITIALIZE</button>
+        <p id="error-message" class="error-msg">ACCESS DENIED // INCORRECT PASSKEY</p>
     </div>
 
     <div id="main-content">
-        <h1>> SYSTEM_UNLOCKED <span class="blink">_</span></h1>
+        <h1>> SYSTEM_BOOT: HAPPY_BIRTHDAY <span class="blink">_</span></h1>
         
-        <p>Target: <strong>[HIS NAME]</strong></p>
-        <p>Status: <strong>Authorized</strong></p>
+        <div style="text-align: center;">
+            <img src="https://media1.tenor.com/m/X_5s7vLqXGMAAAAC/anime-computer.gif" 
+                 class="anime-gif" alt="Anime Hacker GIF">
+        </div>
+
+        <p>User detected: <strong>JASMAN KAPOOR</strong> (Admin)</p>
+        <p style="font-size: 0.85rem; color: #00cc33; margin-top: -10px;">
+            システム開始 ... ID認証 ... 完了 (System Start... Verified... Complete)
+        </p>
 
         <br>
 
         <div class="terminal-box">
-            <h3>> ENCRYPTED_FILES (Click to Open):</h3>
+            <h3>> ENCRYPTED_LOGS (Click to Expand):</h3>
 
             <div class="command-line" onclick="toggle('msg1')">> ERROR: CODE_WONT_COMPILE</div>
             <div id="msg1" class="hidden-content">
-                Hey. I know you're staring at the screen and hate everything. Remember you're the smartest guy I know. Take a 5 min walk. The bug will still be there, but your brain will be fresh.
+                Hey. I know you're staring at the screen and hate everything right now.<br><br>
+                Remember: You're the smartest guy I know. Take a 5 min walk. The bug will still be there, but your brain will be fresh.<br><br>
+                <em>"Even the best systems need a reboot."</em>
             </div>
 
             <div class="command-line" onclick="toggle('msg2')">> ALERT: FEELING_LIKE_FAILURE</div>
             <div id="msg2" class="hidden-content">
-                Stop that. Imposter syndrome is lying to you. <br>
+                Stop that. Imposter syndrome is lying to you.<br><br>
                 1. You built a startup.<br>
-                2. You are kind.<br>
-                I believe in you, even when you don't.
+                2. You understand things 99% of people don't.<br>
+                3. You are kind.<br><br>
+                If you can't believe in yourself right now, that's okay.<br>
+                <strong>"Don't believe in yourself. Believe in the me that believes in you."</strong> (Gurren Lagann)
             </div>
 
             <div class="command-line" onclick="toggle('msg3')">> SYSTEM: INSOMNIA_DETECTED</div>
             <div id="msg3" class="hidden-content">
-                Turn off the monitor. Put on this playlist: [LINK]. Close your eyes. The empire can wait until morning.
+                Turn off the monitor. Your brain is running on overdrive, but it needs to cool down.<br><br>
+                I prescribed you a specific audio frequency for this moment:<br>
+                
+                <div style="border: 1px solid #00ff41; padding: 10px; margin-top: 10px; display: inline-block; background: #000;">
+                    <span class="blink">▶</span> 
+                    <a href="PASTE_SPOTIFY_LINK_HERE" target="_blank" style="text-decoration: none; font-weight: bold;">
+                        NOW PLAYING: Aditya Bhardwaj Mix
+                    </a>
+                </div>
+                <br><br>
+                Close your eyes. The empire can wait until morning.
             </div>
 
-            <div class="command-line" onclick="toggle('msg4')">> CRITICAL: DEPRESSION_HIT</div>
+            <div class="command-line" onclick="toggle('msg4')">> CRITICAL: MENTAL_HEALTH_LOW</div>
             <div id="msg4" class="hidden-content">
-                You don't have to be "capable" right now. You just have to breathe. I'm here. No judgment, just support.
+                You don't have to be "capable" right now. You just have to breathe.<br><br>
+                I'm here. No judgment, just support. Call me if you want silence or noise.<br>
+                <em>(Also, check the physical box I gave you.)</em>
             </div>
         </div>
 
         <div class="terminal-box">
-            <h3>> PHYSICAL_ASSETS</h3>
-            <p>Box of Energy Bytes (Truffles) successfully deployed.</p>
-            <p><strong>Happy Birthday, [His Name].</strong></p>
+            <h3>> PHYSICAL_ASSETS_DETECTED</h3>
+            <p><strong>Item:</strong> "Energy Bytes" (Oreo Truffles)</p>
+            <p><strong>Status:</strong> Deployed to your location.</p>
+            <p><strong>Instruction:</strong> Consume when energy < 20%.</p>
+            <br>
+            <p style="text-align: center; border-top: 1px solid #333; padding-top: 10px;">
+                Happy Birthday, Jasman. <span style="color:red;">♥</span>
+            </p>
         </div>
     </div>
 
     <script>
         // --- CONFIGURATION ---
-        // CHANGE THIS TO WHATEVER PASSWORD YOU WANT
+        // You can change the password here if you want!
         const CORRECT_PASSWORD = "sudo happy birthday"; 
         // ---------------------
 
@@ -142,19 +209,18 @@
             const body = document.body;
 
             if (input === CORRECT_PASSWORD) {
-                // Success: Hide login, show content
+                // Success: Unlock
                 loginScreen.style.display = "none";
                 mainContent.style.display = "block";
-                body.style.display = "block"; // Reset flex centering
+                body.style.display = "block"; // Reset layout for scrolling
                 body.style.padding = "20px";
             } else {
                 // Failure: Show error
                 errorMsg.style.opacity = "1";
-                // Shake effect logic could go here
             }
         }
 
-        // Allow pressing "Enter" to submit
+        // Allow pressing "Enter" key to submit password
         document.getElementById("passwordInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 checkPassword();
