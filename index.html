@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURE TERMINAL // JASMAN_OS</title>
+    <title>JASMAN_OS // COMMAND CENTER</title>
     <style>
         body {
-            background-color: #0d0d0d;
-            color: #00ff41; /* Hacker Green */
+            background-color: #050505;
+            color: #00ff41;
             font-family: 'Courier New', Courier, monospace;
             padding: 20px;
             margin: 0;
@@ -18,224 +18,209 @@
             flex-direction: column;
         }
 
-        /* LOGIN SCREEN STYLES */
-        #login-screen {
-            text-align: center;
-            border: 1px solid #00ff41;
-            padding: 40px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-            background-color: #050505;
-            max-width: 90%;
-        }
-        
-        input[type="text"] {
-            background-color: #111;
-            border: none;
-            border-bottom: 2px solid #00ff41;
-            color: #00ff41;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            outline: none;
-            padding: 10px;
-            text-align: center;
-            margin-top: 15px;
-            width: 80%;
-            max-width: 250px;
+        /* --- UTILITY CLASSES --- */
+        .box {
+            border: 1px solid #333;
+            background-color: #0f0f0f;
+            padding: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
         }
 
+        h2, h3 { border-bottom: 1px solid #00ff41; padding-bottom: 5px; margin-top: 0; font-size: 1rem; text-transform: uppercase; }
+        
         button {
-            background-color: #00ff41;
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        button:hover { background-color: #fff; box-shadow: 0 0 10px #fff; }
-
-        .error-msg { color: #ff3333; margin-top: 15px; opacity: 0; transition: opacity 0.3s; }
-
-        /* MAIN CONTENT (Hidden by default) */
-        #main-content {
-            display: none; 
-            max-width: 650px;
-            width: 100%;
-            padding-bottom: 50px; /* Space for scrolling */
-        }
-
-        /* GENERAL STYLES */
-        h1 { border-bottom: 2px solid #00ff41; padding-bottom: 10px; font-size: 1.5rem; }
-        
-        .terminal-box { 
-            border: 1px solid #333; 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            background-color: #0f0f0f; 
-        }
-
-        .command-line { 
-            cursor: pointer; 
-            padding: 12px; 
-            border: 1px dashed #00ff41; 
-            margin-top: 10px; 
-            transition: all 0.3s; 
-            font-weight: bold;
-        }
-        .command-line:hover { background-color: #003300; border-style: solid; }
-
-        .hidden-content { 
-            display: none; 
-            padding: 15px; 
-            color: #ddd; 
-            border-left: 3px solid #00ff41; 
-            margin-top: 5px; 
-            line-height: 1.6; 
-            background-color: #1a1a1a;
-        }
-
-        .show { display: block; }
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* ANIME GIF STYLE */
-        .anime-gif {
-            width: 100%;
-            max-width: 350px;
+            background: #003300;
+            color: #00ff41;
             border: 1px solid #00ff41;
-            opacity: 0.9;
+            padding: 8px 15px;
+            font-family: inherit;
+            cursor: pointer;
+            margin: 5px;
+            transition: 0.2s;
+        }
+        button:hover { background: #00ff41; color: #000; }
+
+        /* --- FEATURE 1: TIMER --- */
+        #timer-display {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
             margin: 10px 0;
+            letter-spacing: 5px;
         }
 
-        a { color: #00ff41; }
+        /* --- FEATURE 2: BREATHING CIRCLE --- */
+        #breathe-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #00ff41;
+            border-radius: 50%;
+            margin: 20px auto;
+            opacity: 0.2;
+            display: none; /* Hidden by default */
+        }
+        .inhale-exhale { animation: breatheAnim 4s infinite ease-in-out; }
+        
+        @keyframes breatheAnim {
+            0% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(2.5); opacity: 0.8; } /* Inhale */
+            100% { transform: scale(1); opacity: 0.2; } /* Exhale */
+        }
+
+        /* --- LOGS & TEXT --- */
+        .hidden-content { display: none; padding: 10px; color: #ccc; border-left: 2px solid #00ff41; }
+        .show { display: block; }
+        
+        /* --- LOGIN --- */
+        #login-screen { text-align: center; border: 1px solid #00ff41; padding: 30px; background: #000; }
+        #main-content { display: none; width: 100%; max-width: 650px; }
+        input { background: #111; border: none; border-bottom: 1px solid #00ff41; color: #00ff41; padding: 10px; text-align: center; font-family: inherit; }
+
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <h2>> SECURE_GATEWAY</h2>
-        <p>Target Identified: <strong>JASMAN KAPOOR</strong></p>
-        <p>Enter Admin Passkey to Decrypt:</p>
-        <input type="text" id="passwordInput" placeholder="ENTER_CODE" autocomplete="off">
-        <br>
-        <button onclick="checkPassword()">INITIALIZE</button>
-        <p id="error-message" class="error-msg">ACCESS DENIED // INCORRECT PASSKEY</p>
+        <h3>> AUTHENTICATION REQUIRED</h3>
+        <p>User: <strong>JASMAN KAPOOR</strong></p>
+        <input type="text" id="passwordInput" placeholder="ENTER PASSKEY" autocomplete="off">
+        <br><br>
+        <button onclick="checkPassword()">ACCESS DASHBOARD</button>
+        <p id="error-msg" style="color:red; opacity:0; font-size:0.8rem;">ACCESS DENIED</p>
     </div>
 
     <div id="main-content">
-        <h1>> SYSTEM_BOOT: HAPPY_BIRTHDAY <span class="blink">_</span></h1>
-        
-        <div style="text-align: center;">
-            <img src="https://media1.tenor.com/m/X_5s7vLqXGMAAAAC/anime-computer.gif" 
-                 class="anime-gif" alt="Anime Hacker GIF">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="margin:0;">JASMAN_OS v2.0</h1>
+            <p style="font-size: 0.8rem; color: #666;">SYSTEM STATUS: OPTIMAL</p>
         </div>
 
-        <p>User detected: <strong>JASMAN KAPOOR</strong> (Admin)</p>
-        <p style="font-size: 0.85rem; color: #00cc33; margin-top: -10px;">
-            システム開始 ... ID認証 ... 完了 (System Start... Verified... Complete)
-        </p>
+        <div class="box">
+            <h3>> PROTOCOL: DEEP_WORK (Timer)</h3>
+            <p style="font-size: 0.8rem; color: #888;">Activate when you need to grind code.</p>
+            <div id="timer-display">25:00</div>
+            <div style="text-align: center;">
+                <button onclick="startTimer()">START FOCUS</button>
+                <button onclick="resetTimer()">RESET</button>
+            </div>
+        </div>
 
-        <br>
+        <div class="box">
+            <h3>> PROTOCOL: FUEL_SELECTION</h3>
+            <p style="font-size: 0.8rem; color: #888;">Decision fatigue detected? Let the system decide dinner.</p>
+            <div id="food-result" style="text-align: center; font-size: 1.2rem; margin: 15px; color: #fff;">
+                [ WAITING FOR INPUT... ]
+            </div>
+            <div style="text-align: center;">
+                <button onclick="pickFood()">GENERATE FOOD CHOICE</button>
+            </div>
+        </div>
 
-        <div class="terminal-box">
-            <h3>> ENCRYPTED_LOGS (Click to Expand):</h3>
+        <div class="box">
+            <h3>> PROTOCOL: PANIC_RESET</h3>
+            <p style="font-size: 0.8rem; color: #888;">If anxiety > 80%, follow the circle.</p>
+            <div style="text-align: center;">
+                <button onclick="toggleBreathing()">TOGGLE VISUALIZER</button>
+            </div>
+            <div id="breathe-circle"></div>
+        </div>
 
-            <div class="command-line" onclick="toggle('msg1')">> ERROR: CODE_WONT_COMPILE</div>
+        <div class="box">
+            <h3>> SYSTEM_LOGS (Read When Needed)</h3>
+            
+            <div style="cursor:pointer; border-bottom:1px dashed #333; padding:10px;" onclick="toggle('msg1')">> ERROR: IMPOSTER_SYNDROME</div>
             <div id="msg1" class="hidden-content">
-                Hey. I know you're staring at the screen and hate everything right now.<br><br>
-                Remember: You're the smartest guy I know. Take a 5 min walk. The bug will still be there, but your brain will be fresh.<br><br>
-                <em>"Even the best systems need a reboot."</em>
+                Stop it. You built a startup. You are capable. <br>
+                <em>"Don't believe in yourself. Believe in the me that believes in you."</em> (Gurren Lagann)
             </div>
 
-            <div class="command-line" onclick="toggle('msg2')">> ALERT: FEELING_LIKE_FAILURE</div>
+            <div style="cursor:pointer; border-bottom:1px dashed #333; padding:10px;" onclick="toggle('msg2')">> ERROR: CANT_SLEEP</div>
             <div id="msg2" class="hidden-content">
-                Stop that. Imposter syndrome is lying to you.<br><br>
-                1. You built a startup.<br>
-                2. You understand things 99% of people don't.<br>
-                3. You are kind.<br><br>
-                If you can't believe in yourself right now, that's okay.<br>
-                <strong>"Don't believe in yourself. Believe in the me that believes in you."</strong> (Gurren Lagann)
+                Code won't run if the CPU is overheated.<br>
+                <a href="PASTE_PLAYLIST_LINK_HERE" target="_blank" style="color:#fff;">[▶] LAUNCH SLEEP PLAYLIST</a>
             </div>
 
-            <div class="command-line" onclick="toggle('msg3')">> SYSTEM: INSOMNIA_DETECTED</div>
+            <div style="cursor:pointer; padding:10px;" onclick="toggle('msg3')">> ALERT: FEELING_LOW</div>
             <div id="msg3" class="hidden-content">
-                Turn off the monitor. Your brain is running on overdrive, but it needs to cool down.<br><br>
-                I prescribed you a specific audio frequency for this moment:<br>
-                
-                <div style="border: 1px solid #00ff41; padding: 10px; margin-top: 10px; display: inline-block; background: #000;">
-                    <span class="blink">▶</span> 
-                    <a href="PASTE_SPOTIFY_LINK_HERE" target="_blank" style="text-decoration: none; font-weight: bold;">
-                        NOW PLAYING: Aditya Bhardwaj Mix
-                    </a>
-                </div>
-                <br><br>
-                Close your eyes. The empire can wait until morning.
+                You don't have to be "capable" today. You just have to breathe. I'm here.
             </div>
-
-            <div class="command-line" onclick="toggle('msg4')">> CRITICAL: MENTAL_HEALTH_LOW</div>
-            <div id="msg4" class="hidden-content">
-                You don't have to be "capable" right now. You just have to breathe.<br><br>
-                I'm here. No judgment, just support. Call me if you want silence or noise.<br>
-                <em>(Also, check the physical box I gave you.)</em>
-            </div>
-        </div>
-
-        <div class="terminal-box">
-            <h3>> PHYSICAL_ASSETS_DETECTED</h3>
-            <p><strong>Item:</strong> "Energy Bytes" (Oreo Truffles)</p>
-            <p><strong>Status:</strong> Deployed to your location.</p>
-            <p><strong>Instruction:</strong> Consume when energy < 20%.</p>
-            <br>
-            <p style="text-align: center; border-top: 1px solid #333; padding-top: 10px;">
-                Happy Birthday, Jasman. <span style="color:red;">♥</span>
-            </p>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // You can change the password here if you want!
-        const CORRECT_PASSWORD = "sudo happy birthday"; 
-        // ---------------------
-
+        // --- 1. PASSWORD LOGIC ---
+        const PASSWORD = "sudo happy birthday"; 
+        
         function checkPassword() {
-            const input = document.getElementById("passwordInput").value.toLowerCase().trim();
-            const errorMsg = document.getElementById("error-message");
-            const loginScreen = document.getElementById("login-screen");
-            const mainContent = document.getElementById("main-content");
-            const body = document.body;
-
-            if (input === CORRECT_PASSWORD) {
-                // Success: Unlock
-                loginScreen.style.display = "none";
-                mainContent.style.display = "block";
-                body.style.display = "block"; // Reset layout for scrolling
-                body.style.padding = "20px";
+            if(document.getElementById("passwordInput").value.toLowerCase().trim() === PASSWORD) {
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
             } else {
-                // Failure: Show error
-                errorMsg.style.opacity = "1";
+                document.getElementById("error-msg").style.opacity = "1";
             }
         }
 
-        // Allow pressing "Enter" key to submit password
-        document.getElementById("passwordInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                checkPassword();
+        // --- 2. FOCUS TIMER LOGIC ---
+        let time = 25 * 60;
+        let timerInterval;
+        
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const min = Math.floor(time / 60);
+                const sec = time % 60;
+                document.getElementById("timer-display").innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+                time--;
+                if (time < 0) { clearInterval(timerInterval); alert("SESSION COMPLETE. TAKE A BREAK."); }
+            }, 1000);
+        }
+        function resetTimer() {
+            clearInterval(timerInterval);
+            time = 25 * 60;
+            document.getElementById("timer-display").innerText = "25:00";
+        }
+
+        // --- 3. FOOD PICKER LOGIC (CUSTOMIZE THIS!) ---
+        const foods = [
+            "Order Spicy Ramen", 
+            "Biryani Time", 
+            "Comfort Pizza", 
+            "Sushi Platter", 
+            "Chineses Takeout", 
+            "Burger & Fries",
+            "Just a Protein Shake"
+        ];
+
+        function pickFood() {
+            const random = Math.floor(Math.random() * foods.length);
+            document.getElementById("food-result").innerText = `> DETECTED OPTIMAL FUEL: [ ${foods[random]} ]`;
+            document.getElementById("food-result").style.color = "#00ff41";
+        }
+
+        // --- 4. BREATHING LOGIC ---
+        function toggleBreathing() {
+            const circle = document.getElementById("breathe-circle");
+            if (circle.style.display === "block") {
+                circle.style.display = "none";
+                circle.classList.remove("inhale-exhale");
+            } else {
+                circle.style.display = "block";
+                circle.classList.add("inhale-exhale");
             }
-        });
+        }
 
         function toggle(id) {
-            var x = document.getElementById(id);
-            if (x.className.indexOf("show") == -1) {
-                x.className += " show";
-            } else {
-                x.className = x.className.replace(" show", "");
-            }
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === "block" ? "none" : "block";
         }
+        
+        // Enter key for login
+        document.getElementById("passwordInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") checkPassword();
+        });
     </script>
-
 </body>
 </html>
